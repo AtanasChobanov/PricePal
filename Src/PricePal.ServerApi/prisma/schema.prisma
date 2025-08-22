@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model StoreChain {
+  id      Int     @id @default(autoincrement())
+  name    String
+  website String
+
+  // Relations
+  stores  Store[]
+  prices  Price[]
+}
+
+model Store {
+  id       Int        @id @default(autoincrement())
+  chain_id Int
+  name     String
+  city     String
+  address  String?
+
+  // Relations
+  chain    StoreChain @relation(fields: [chain_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+
+  // Relations
+  products Product[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  brand       String?
+  category_id Int
+  barcode     String?   @unique
+  image_url   String?
+
+  // Relations
+  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  prices   Price[]
+}
+
+model Price {
+  id         Int       @id @default(autoincrement())
+  product_id Int
+  chain_id   Int
+  price_bgn  Decimal   @db.Decimal(10, 2)
+  price_eur  Decimal   @db.Decimal(10, 2)
+  valid_from DateTime
+  valid_to   DateTime?
+  is_promo   Boolean   @default(false)
+
+  // Relations
+  product Product    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chain   StoreChain @relation(fields: [chain_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}

@@ -1,7 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import "../globals.css";
-
 export default function Index() {
   return (
     <ScrollView className="flex-1 pt-5" showsVerticalScrollIndicator={false}>
@@ -73,7 +71,7 @@ export default function Index() {
         <View>
           <View>
             <Image 
-        source={require("../assets/images/hlqb.jpg")} 
+        source={require("../../assets/images/hlqb.jpg")} 
         className="size-[180px] rounded-t-2xl"
       />
           </View>
@@ -95,7 +93,7 @@ export default function Index() {
              <View>
           <View>
             <Image 
-        source={require("../assets/images/hlqb.jpg")} 
+          source={require("../../assets/images/hlqb.jpg")} 
         className="size-[180px] rounded-t-2xl"
       />
           </View>
@@ -119,7 +117,7 @@ export default function Index() {
              <View>
           <View>
             <Image 
-        source={require("../assets/images/hlqb.jpg")} 
+          source={require("../../assets/images/hlqb.jpg")} 
         className="size-[180px] rounded-t-2xl"
       />
           </View>

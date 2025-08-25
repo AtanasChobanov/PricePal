@@ -55,6 +55,7 @@ const _layout = () => {
           tabBarItemStyle: {
             flex: 1,
             height: '100%',
+            
             justifyContent: 'center',
             alignItems: 'center',
             marginHorizontal: 15,

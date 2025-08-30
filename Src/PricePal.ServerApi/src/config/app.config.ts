@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import storeChainsRouter from "./routes/storeChains.js";
+import productsRouter from "../routes/products.routes.js";
 
 const app = express();
 
@@ -10,6 +10,6 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.use("/store-chains", storeChainsRouter);
+app.use("/products", productsRouter);
 
 export default app;

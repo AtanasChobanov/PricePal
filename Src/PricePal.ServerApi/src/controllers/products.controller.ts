@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import ScraperService from "../services/scraper.service.js";
+import ScraperService from "../services/scraper/scraper.service.js";
 
 export default class ProductsController {
   static async scrapeProducts(req: Request, res: Response) {

@@ -4,7 +4,19 @@ export default class KauflandScraperService {
   static async scrapeKauflandOffers(page: Page) {
     const products = await page.evaluate(() => {
       const sections = document.querySelectorAll(".k-product-section");
-      const allProducts: any[] = [];
+      const allProducts: {
+        category: string;
+        name: string;
+        unit: string;
+        priceBgn: string;
+        priceEur: string;
+        oldPriceBgn: string;
+        oldPriceEur: string;
+        validFrom: string;
+        validTo: string;
+        discount: string;
+        image: string;
+      }[] = [];
 
       const { validFrom, validTo } = extractValidityPeriod();
       sections.forEach((section) => {

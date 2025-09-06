@@ -63,7 +63,7 @@ model Price {
   price_eur  Decimal   @db.Decimal(10, 2)
   valid_from DateTime
   valid_to   DateTime?
-  is_promo   Boolean   @default(false)
+  discount   Int?
 
   // Relations
   product Product    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)

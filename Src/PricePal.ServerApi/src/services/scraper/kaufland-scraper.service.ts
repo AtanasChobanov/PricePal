@@ -1,22 +1,11 @@
 import type { Page } from "puppeteer";
+import type { ScrapedProduct } from "../../models/scraped-product.model.js";
 
 export default class KauflandScraperService {
-  static async scrapeKauflandOffers(page: Page) {
+  static async scrapeKauflandOffers(page: Page): Promise<ScrapedProduct[]> {
     const products = await page.evaluate(() => {
       const sections = document.querySelectorAll(".k-product-section");
-      const allProducts: {
-        category: string;
-        name: string;
-        unit: string;
-        priceBgn: string;
-        priceEur: string;
-        oldPriceBgn: string;
-        oldPriceEur: string;
-        validFrom: string;
-        validTo: string;
-        discount: string;
-        image: string;
-      }[] = [];
+      const allProducts: ScrapedProduct[] = [];
 
       const { validFrom, validTo } = extractValidityPeriod();
       sections.forEach((section) => {

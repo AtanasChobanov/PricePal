@@ -1,20 +1,37 @@
 import puppeteer from "puppeteer";
-import KauflandScraperService from "./kaufland-scraper.service.js";
+import prisma from "../../config/prisma-client.config.js";
+import ScraperFactory from "./scraper.factory.js";
 
 export default class ScraperService {
   static async scrapeAllSites() {
     const browser = await puppeteer.launch({ headless: true });
     try {
-      const page = await browser.newPage();
-      await page.goto(
-        "https://www.kaufland.bg/aktualni-predlozheniya/oferti.html?kloffer-week=current&kloffer-category=0001_TopArticle",
-        { waitUntil: "networkidle2" }
+      const storeChains = await prisma.storeChain.findMany();
+      const results = await Promise.all(
+        storeChains.map(async (chain) => {
+          const page = await browser.newPage();
+          const url = `${chain.base_url}${chain.products_page}`;
+
+          try {
+            await page.goto(url, { waitUntil: "networkidle2" });
+
+            const scraperFn = ScraperFactory.getScraper(chain.name);
+            const products = await scraperFn(page);
+
+            return { chain: chain.name, products };
+          } catch (err: any) {
+            console.error(
+              `⚠️ Error occurred when scraping ${chain.name}:`,
+              err
+            );
+            return { chain: chain.name, products: [], error: err.message };
+          } finally {
+            await page.close();
+          }
+        })
       );
 
-      const products = await KauflandScraperService.scrapeKauflandOffers(page);
-
-      await page.close();
-      return { products };
+      return results;
     } finally {
       await browser.close();
     }

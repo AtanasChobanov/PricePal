@@ -1,6 +1,6 @@
-import puppeteer from "puppeteer";
+import { Page } from "puppeteer";
 
-export interface ScrapedProduct {
+export interface IScrapableProduct {
   category: string;
   name: string;
   unit: string;
@@ -14,6 +14,6 @@ export interface ScrapedProduct {
   image: string;
 }
 
-export type ScrapedProductFn = (
-  page: puppeteer.Page
-) => Promise<ScrapedProduct[]>;
+export interface IScraper {
+  scrapeOffers(page: Page): Promise<IScrapableProduct[]>;
+}

@@ -3,10 +3,11 @@ import prisma from "../../config/prisma-client.config.js";
 import ScraperFactory from "./scraper.factory.js";
 
 export default class ScraperService {
-  static async scrapeAllSites() {
+  async scrapeAllSites() {
     const browser = await puppeteer.launch({ headless: true });
     try {
       const storeChains = await prisma.storeChain.findMany();
+
       const results = await Promise.all(
         storeChains.map(async (chain) => {
           const page = await browser.newPage();
@@ -15,8 +16,8 @@ export default class ScraperService {
           try {
             await page.goto(url, { waitUntil: "networkidle2" });
 
-            const scraperFn = ScraperFactory.getScraper(chain.name);
-            const products = await scraperFn(page);
+            const scraper = ScraperFactory.getScraper(chain.name);
+            const products = await scraper.scrapeOffers(page);
 
             return { chain: chain.name, products };
           } catch (err: any) {

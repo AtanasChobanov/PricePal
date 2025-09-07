@@ -4,7 +4,8 @@ import ScraperService from "../services/scraper/scraper.service.js";
 export default class ProductsController {
   static async scrapeProducts(req: Request, res: Response) {
     try {
-      const products = await ScraperService.scrapeAllSites();
+      const scraperService = new ScraperService();
+      const products = await scraperService.scrapeAllSites();
       res.json(products);
     } catch (error) {
       console.error(error);

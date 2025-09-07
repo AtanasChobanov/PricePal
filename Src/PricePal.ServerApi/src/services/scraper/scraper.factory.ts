@@ -1,17 +1,22 @@
-import type { ScrapedProductFn } from "../../models/scraped-product.model.js";
+import type { IScraper } from "../../models/scraper.model.js";
+import BillaScraperService from "./billa-scraper.service.js";
 import KauflandScraperService from "./kaufland-scraper.service.js";
+import LidlScraperService from "./lidl-scraper.service.js";
+import TMarketScraperService from "./tmarket-scraper.service.js";
 
 export default class ScraperFactory {
-  private static readonly scrapers: Record<string, ScrapedProductFn> = {
-    kaufland: KauflandScraperService.scrapeKauflandOffers,
-    // lidl, billa, tmarket
+  private static scrapers: Record<string, IScraper> = {
+    kaufland: new KauflandScraperService(),
+    lidl: new LidlScraperService(),
+    billa: new BillaScraperService(),
+    tmarket: new TMarketScraperService(),
   };
 
-  static getScraper(chainName: string): ScrapedProductFn {
-    const scraperFn = ScraperFactory.scrapers[chainName.toLowerCase()];
-    if (!scraperFn) {
+  static getScraper(chainName: string): IScraper {
+    const scraper = ScraperFactory.scrapers[chainName.toLowerCase()];
+    if (!scraper) {
       throw new Error(`❌ No scraper defined for chain: ${chainName}`);
     }
-    return scraperFn;
+    return scraper;
   }
 }

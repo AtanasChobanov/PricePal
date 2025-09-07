@@ -16,7 +16,8 @@ datasource db {
 model StoreChain {
   id      Int     @id @default(autoincrement())
   name    String
-  website String
+  base_url String
+  products_page String
 
   // Relations
   stores  Store[]

@@ -11,7 +11,7 @@ export interface IScrapableProduct {
   validFrom: string;
   validTo: string;
   discount: string;
-  image: string;
+  imageUrl: string;
 }
 
 export interface IScraper {

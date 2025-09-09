@@ -77,7 +77,7 @@ export default class KauflandScraperService implements IScraper {
           item.querySelector(".k-price-tag__discount")?.textContent?.trim() ||
           "";
 
-        const image =
+        const imageUrl =
           (
             item.querySelector(
               ".k-product-tile__main-image"
@@ -95,7 +95,7 @@ export default class KauflandScraperService implements IScraper {
           validFrom,
           validTo,
           discount,
-          image,
+          imageUrl,
         };
       }
 

@@ -4,7 +4,7 @@ import ScraperFactory from "./scraper.factory.js";
 
 export default class ScraperService {
   async scrapeAllSites() {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false }); // In order tmarket scraper to work headless needs to be false - idk why lol
     try {
       const storeChains = await prisma.storeChain.findMany();
 

@@ -6,13 +6,13 @@ const ProfileLayout = () => {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#fff",
+  
         },
         headerTitleStyle: {
           fontWeight: "600",
           fontSize: 18,
         },
-        headerTintColor: "#000",
+
       }}
     >
       <Stack.Screen 

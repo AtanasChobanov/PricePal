@@ -2,8 +2,36 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Tabs, router } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+// Get screen dimensions
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+
+// Width and height functions
+const wp = (percentage: number): number => {
+  return (percentage * screenWidth) / 100;
+};
+
+const hp = (percentage: number): number => {
+  return (percentage * screenHeight) / 100;
+};
+
+// Font functions
+const getFontSize = (size: number): number => {
+  if (screenWidth < 350) return size * 0.85; 
+  if (screenWidth > 400) return size * 1.1;  
+  return size; 
+};
+
+const TabBarHeight = Math.max(hp(8.5), 65); 
+
+const getCircleSize = (percentage: number): number => {
+  const width = wp(percentage);
+  const height = hp(percentage);
+  return Math.min(width, height); // Use the smaller dimension
+};
 
 const TabIcon = ({ focused, icon, title }: any) => {
   if (focused) {
@@ -87,20 +115,18 @@ const _layout = () => {
               tabBarShowLabel: false,
               tabBarItemStyle: {
                 flex: 1,
-                height: 70, 
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: 15,
               },
               tabBarStyle: {
                 position: 'absolute',
-                bottom: 36,
-                
+                bottom: hp(4.5),
                 left: '50%',
                 transform: [{ translateX: 25 }], 
-                height: 70,
-                width: 270,
-                borderRadius: 40,
+                height: TabBarHeight,
+                width: wp(70),
+                borderRadius:  TabBarHeight / 2,
                 overflow: 'hidden',
                 borderWidth: 1,
                     borderColor:"white",
@@ -120,6 +146,7 @@ const _layout = () => {
               ),
             }}
           >
+            
             <Tabs.Screen
               name="index"
               options={{
@@ -168,7 +195,28 @@ const _layout = () => {
               options={{
                 href: null,
                    headerShown:false}}/>
-     
+     <Tabs.Screen
+  name="subcategories/[id]"
+  options={{
+    href: null,  
+    headerShown: false
+  }}
+/>
+     <Tabs.Screen
+  name="productsCategories/[subcategoryId]"
+  options={{
+    href: null,
+    headerShown: false
+  }}
+/>
+    <Tabs.Screen
+  name="subcategories/[Id]"
+  options={{
+    href: null,  //TO DO: understand why this is happening
+    headerShown: false
+  }}
+/>
+
           </Tabs>
           <SearchButton />
         </View>
@@ -206,18 +254,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
+    borderRadius: hp(8.5) / 2,
     paddingHorizontal: 14,
-    marginTop: 30, 
-    marginRight: 10,
-    height: 70,
+    marginTop: hp(3.9), 
+    marginRight: wp(0.5),
+    height: TabBarHeight,
      borderColor:"white",
      borderWidth:0.5,
-    minWidth: 120,
+    width: wp(30),
   },
   focusedText: {
     marginLeft: 6,
-    fontSize: 13,
+    fontSize: getFontSize(13),
     color: '#000000',
     fontWeight: '500',
     alignItems: 'center',
@@ -226,23 +274,23 @@ const styles = StyleSheet.create({
   defaultTab: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
-    height: 50, 
-    width: 100,
+    marginTop: hp(4.2),
+    height: hp(20), 
+    width: wp(20),
   },
   defaultText: {
-    fontSize: 12,
+    fontSize: getFontSize(12),
     color: '#000000',
     textAlign: 'center',
     marginTop: 4,
   },
   searchButton: {
     position: 'absolute',
-    bottom: 40,
-    right: 25,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    bottom: hp(5),
+    right: wp(6),
+    width: getCircleSize(15),
+    height: getCircleSize(15),
+    borderRadius: getCircleSize(15)/2,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',

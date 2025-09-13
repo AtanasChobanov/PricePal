@@ -1,387 +1,371 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, View } from "react-native";
-const ProductBox = ({ productName, brand, price, photo }: any) =>{
-  return(
-<View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={{ uri: photo }}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-      colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">{productName} {brand}</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€{price}</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-  )
-}
-export default function Index() {
-  return (
-      <ImageBackground
-      source={require("../../assets/images/background2.png")}
-      style={styles.backgroundImage}
-    >
-    <ScrollView className="flex-1 pt-[55px]" showsVerticalScrollIndicator={false}>
-      {/* Title */}
-      <View className="items-center">
-  <Text className="text-4xl p-3 font-bold">Тази седмица</Text>
-  <Text className="text-2xl p-3 font-semibold">Топ категорий</Text>
-      </View>
-    
+import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
 
-      {/* Top Categories row */}
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+
+interface Product {
+  name: string;
+  brand: string;
+  price: string;
+  photo?: string | null;
+}
+
+interface ProductBoxProps {
+  productName: string;
+  brand: string;
+  price: string;
+  photo?: string | null;
+  colors?: string[];
+}
+
+interface HeartIconProps {
+  filled?: boolean;
+}
+
+interface CategoryButtonProps {
+  title: string;
+}
+
+interface ProductSectionProps {
+  title: string;
+  products: Product[];
+  gradientColors?: string[];
+}
+
+//  Width and height functions
+const wp = (percentage: number): number => {
+  return (percentage * screenWidth) / 100;
+};
+
+const hp = (percentage: number): number => {
+  return (percentage * screenHeight) / 100;
+};
+
+// Font functions
+const getFontSize = (size: number): number => {
+  if (screenWidth < 350) return size * 0.85; 
+  if (screenWidth > 400) return size * 1.1;  
+  return size; 
+};
+
+const ProductBox: React.FC<ProductBoxProps> = ({ 
+  productName, 
+  brand, 
+  price, 
+  photo, 
+  colors 
+}) => {
+
+  const cardWidth = wp(45);
+  const imageSize = cardWidth;
+
+  return (
+    <View style={{ width: cardWidth }}>
+      <View style={styles.imageContainer}>
+        {photo ? (
+          <Image
+            source={{ uri: photo }}
+            style={[styles.productImage, { width: imageSize, height: imageSize }]}
+            resizeMode="cover"
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/hlqb.jpg")}
+            style={[styles.productImage, { width: imageSize, height: imageSize }]}
+            resizeMode="cover"
+          />
+        )}
+        {/* Heart icon overlay */}
+        <View style={styles.heartOverlay}>
+          <HeartIcon />
+        </View>
+      </View>
+      <LinearGradient
+        style={[styles.products, { width: cardWidth }]}
+        colors={ ['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
+        start={{ x: 0, y: 1 }}
+      >
+        <View style={styles.productContent}>
+          <View style={styles.productNameContainer}>
+            <Text 
+              style={[styles.productName, { fontSize: getFontSize(16) }]} 
+              numberOfLines={2}
+            >
+              {productName} {brand}
+            </Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>
+              От
+            </Text>
+            <Text style={[styles.price, { fontSize: getFontSize(18) }]}>
+              €{price}
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+    </View>
+  );
+};
+
+const HeartIcon: React.FC<HeartIconProps> = ({ filled = false }) => {
+  return (
+    <Svg height={wp(8)} width={wp(8)} viewBox="0 0 24 24">
+      <Path
+        d="M12 21s-6-4.35-9-8.28C1 9.6 3.5 5 7.5 5c2.54 0 4.5 2 4.5 2s1.96-2 4.5-2c4 0 6.5 4.6 4.5 7.72C18 16.65 12 21 12 21z"
+        fill={filled ? "black" : "none"}
+        stroke="black"
+        strokeWidth={1}
+      />
+    </Svg>
+  );
+};
+
+const CategoryButton: React.FC<CategoryButtonProps> = ({ title }) => {
+  const buttonWidth = wp(35); 
+  
+  return (
+    <LinearGradient 
+      style={[styles.categories, { width: buttonWidth, minWidth: 120 }]}
+      colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
+      start={{ x: 0, y: 1 }}
+    >
+      <Text 
+        style={[styles.categoryText, { fontSize: getFontSize(16) }]} 
+        numberOfLines={1}
+      >
+        {title}
+      </Text>
+    </LinearGradient>
+  );
+};
+
+const ProductSection: React.FC<ProductSectionProps> = ({ 
+  title, 
+  products, 
+  gradientColors 
+}) => {
+  return (
+    <>
+      <View style={styles.sectionHeader}>
+        <Text style={[styles.sectionTitle, { fontSize: getFontSize(20) }]}>
+          {title}
+        </Text>
+      </View>
       <ScrollView
-      className="pb-5"
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 16 }}>
-        <View className="flex-row gap-x-4">
-          <LinearGradient 
-          className=" p-5 rounded-xl items-center w-36 h-[50px] justify-center"
-            colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-            start={{x:0,y:1}}
-        style={styles.categories}>
-            <Text  className="text-xl text-black">Месо</Text>
-          </LinearGradient>
-           <LinearGradient 
-          className=" p-5 rounded-xl items-center w-36 h-[50px] justify-center"
-            colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-            start={{x:0,y:1}}
-        style={styles.categories}>
-            <Text  className="text-xl text-black">Зеленчуци</Text>
-          </LinearGradient>
-           <LinearGradient 
-          className=" p-5 rounded-xl items-center w-36 h-[50px] justify-center"
-            colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-            start={{x:0,y:1}}
-        style={styles.categories}>
-            <Text  className="text-xl text-black">Плодове</Text>
-          </LinearGradient>
-            <LinearGradient 
-          className=" p-5 rounded-xl items-center w-36 h-[50px] justify-center"
-            colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-            start={{x:0,y:1}}
-        style={styles.categories}>
-            <Text  className="text-xl text-black">Хляб</Text>
-          </LinearGradient>
-            <LinearGradient 
-          className=" p-5 rounded-xl items-center w-36 h-[50px] justify-center"
-            colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-            start={{x:0,y:1}}
-        style={styles.categories}>
-            <Text  className="text-xl text-black">Месо</Text>
-          </LinearGradient>
-        </View>
-
-        {/* Our choice */}
-      </ScrollView>
-            <View className="items-center">
-              <Text className="text-2xl pb-5 pt-5 font-semibold">Нашия избор</Text>
-            </View>
-      <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{paddingHorizontal:16}}
+        contentContainerStyle={{ paddingHorizontal: wp(4) }}
       >
-      <View className="flex-row gap-x-4">
-       <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-      colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
+        <View style={styles.productsRow}>
+          {products.map((product, index) => (
+            <ProductBox
+              key={index}
+              productName={product.name}
+              brand={product.brand}
+              price={product.price}
+              photo={product.photo}
+              colors={gradientColors}
+            />
+          ))}
         </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-
-            <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-      colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-            <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-      colors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-
-      </View>
       </ScrollView>
-
-        {/* Top products */}
-        <View className="items-center">
-              <Text className="text-2xl pb-5 pt-10 font-semibold">Топ продутки</Text>
-            </View>     
-      <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{paddingHorizontal:16}}
-      >
-      <View className="flex-row gap-x-4">
-
-        <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-        colors={['rgba(255,218,185,1)', 'rgba(255,182,193,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-            <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-        colors={['rgba(255,218,185,1)', 'rgba(255,182,193,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-           <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-         colors={['rgba(255,218,185,1)', 'rgba(255,182,193,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-      </View>
-      </ScrollView>
-          {/* Most selled items */}
-             <View className="items-center">
-              <Text className="text-2xl pb-5 pt-10 font-semibold">Най-купувани продукти</Text>
-            </View>      
-      <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{paddingHorizontal:16}}
-      >
-      <View className="flex-row gap-x-4">
-       <View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-       colors={['rgba(221,214,243,1)', 'rgba(196,181,253,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-<View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-       colors={['rgba(221,214,243,1)', 'rgba(196,181,253,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-<View className="flex-row gap-x-4">
-  <View>
-    <View>
-      <Image
-        source={require("../../assets/images/hlqb.jpg")}
-        className="size-[180px] rounded-t-2xl"/>
-    </View>
-    <LinearGradient
-      style={styles.products}
-      className="p-5 rounded-b-xl"
-       colors={['rgba(221,214,243,1)', 'rgba(196,181,253,1)']}
-      start={{ x: 0, y: 1 }}>
-      <View className="w-full">
-        <View className="items-center mb-2">
-          <Text className="text-xl">Хляб Ресенски</Text>
-        </View>
-        <View className="items-start">
-          <Text className="text-base">От</Text>
-          <Text className="font-bold text-xl">€5.99</Text>
-        </View>
-      </View>
-    </LinearGradient>
-  </View>
-</View>
-      </View>
-      </ScrollView>
-          <View className='mb-[180px]'></View>
-  </ScrollView>
-  </ImageBackground>
+    </>
   );
+};
 
+const Index: React.FC = () => {
 
-}
+  const categories: string[] = ["Месо", "Зеленчуци", "Плодове", "Хляб", "Млечни"];
+  
+  const ourChoiceProducts: Product[] = [
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+  ];
+
+  const topProducts: Product[] = [
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+  ];
+
+  const mostSoldProducts: Product[] = [
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
+  ];
+
+  return (
+    <ImageBackground
+      source={require("../../assets/images/background2.png")}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <ScrollView 
+        style={[styles.container, { paddingTop: hp(7) }]} 
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Main Title */}
+        <View style={styles.titleContainer}>
+          <Text style={[styles.mainTitle, { fontSize: getFontSize(32) }]}>
+            Тази седмица
+          </Text>
+          <Text style={[styles.subtitle, { fontSize: getFontSize(20) }]}>
+            Топ категорий
+          </Text>
+        </View>
+      
+        {/* Categories */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: wp(4), paddingBottom: hp(2) }}
+        >
+          <View style={styles.categoriesRow}>
+            {categories.map((category, index) => (
+              <CategoryButton key={index} title={category} />
+            ))}
+          </View>
+        </ScrollView>
+
+        {/* Product Sections */}
+        <ProductSection 
+          title="Нашия избор" 
+          products={ourChoiceProducts}
+          gradientColors={['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
+        />
+        
+        <ProductSection 
+          title="Топ продутки" 
+          products={topProducts}
+          gradientColors={['rgba(255,218,185,1)', 'rgba(255,182,193,1)']}
+        />
+        
+        <ProductSection 
+          title="Най-купувани продукти" 
+          products={mostSoldProducts}
+          gradientColors={['rgba(221,214,243,1)', 'rgba(196,181,253,1)']}
+        />
+
+        {/* Store Sections */}
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { fontSize: getFontSize(20) }]}>
+            Предложения от Кауфланд
+          </Text>
+        </View>
+        
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { fontSize: getFontSize(20) }]}>
+            Предложения от Билла
+          </Text>
+        </View>
+        
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { fontSize: getFontSize(20) }]}>
+            Предложения от Лидл
+          </Text>
+        </View>
+        
+        {/* Bottom spacing */}
+        <View style={{ height: hp(20) }} />
+      </ScrollView>
+    </ImageBackground>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'orange',
   },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 300,
-  },
-  categories: {
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 15,
-  },
-  text: {
-    backgroundColor: 'transparent',
-    fontSize: 15,
-    color: '#fff',
-  },
-    products: {
-     borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-  },
-    backgroundImage: {
+  backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
   },
-  
+  titleContainer: {
+    alignItems: 'center',
+    paddingHorizontal: wp(4),
+    marginBottom: hp(2),
+  },
+  mainTitle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: hp(1),
+  },
+  subtitle: {
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingVertical: hp(1),
+  },
+  sectionHeader: {
+    alignItems: 'center',
+    paddingVertical: hp(2),
+  },
+  sectionTitle: {
+    fontWeight: '600',
+  },
+  categoriesRow: {
+    flexDirection: 'row',
+    gap: wp(3),
+  },
+  categories: {
+    padding: wp(3),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    height: hp(6),
+  },
+  categoryText: {
+    color: 'black',
+    fontWeight: '500',
+  },
+  productsRow: {
+    flexDirection: 'row',
+    gap: wp(4),
+  },
+  imageContainer: {
+    position: 'relative',
+  },
+  productImage: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  heartOverlay: {
+    position: 'absolute',
+    top: hp(1),
+    right: wp(2),
+    zIndex: 10,
+  },
+  products: {
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    padding: wp(3),
+  },
+  productContent: {
+    width: '100%',
+  },
+  productNameContainer: {
+    alignItems: 'center',
+    marginBottom: hp(1),
+  },
+  productName: {
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  priceContainer: {
+    alignItems: 'flex-start',
+  },
+  priceLabel: {
+    color: 'black',
+  },
+  price: {
+    fontWeight: 'bold',
+    color: 'black',
+  },
 });
+
+export default Index;

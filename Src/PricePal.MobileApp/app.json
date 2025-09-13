@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PricePal.MobileApp",
-    "slug": "PricePal.MobileApp",
+    "slug": "pricepal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -39,6 +39,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "074a882a-d552-4999-a930-2b3ddfd8d071"
+      }
+    },
+    "owner": "kaloyan3d"
   }
 }

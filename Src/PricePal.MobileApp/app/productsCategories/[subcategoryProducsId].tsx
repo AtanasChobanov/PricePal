@@ -4,15 +4,15 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Product, productsArray } from '../(tabs)/categories';
 
 const ProductsPage: React.FC = () => {
-  const { subcategoryId, subcategoryName } = useLocalSearchParams();
+  const { subcategoryProducsId, subcategoryName } = useLocalSearchParams();
   const [productsList, setProductsList] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (!subcategoryId) return;
-    // Filter products by subcategoryId
-    const filtered = productsArray.filter(p => p.subcategoryId === subcategoryId);
+    if (!subcategoryProducsId) return;
+    // Filter products by subcategoryProducsId
+    const filtered = productsArray.filter(p => p.subcategoryId === subcategoryProducsId);
     setProductsList(filtered);
-  }, [subcategoryId]);
+  }, [subcategoryProducsId]);
 
   return (
     <ScrollView className="flex-1 bg-white p-4">

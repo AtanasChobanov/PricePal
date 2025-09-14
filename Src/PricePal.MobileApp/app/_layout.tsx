@@ -8,5 +8,8 @@ export default function RootLayout() {
      <Stack.Screen
     name="(profile)"
     options={{headerShown:false}}/>
+         <Stack.Screen
+    name="products"
+    options={{headerShown:false}}/>
   </Stack>;
 }

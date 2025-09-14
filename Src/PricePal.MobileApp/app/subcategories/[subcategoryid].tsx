@@ -5,23 +5,23 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { categoriesArray, Subcategory } from '../(tabs)/categories';
 
 const CategoryPage: React.FC = () => {
-  const { id, categoryName } = useLocalSearchParams();
+  const { subcategoryid, categoryName } = useLocalSearchParams();
   const router = useRouter();
   const [subcategoryList, setSubcategoryList] = useState<Subcategory[]>([]);
 
   useEffect(() => {
-    if (!id) return;
-    const category = categoriesArray.find(cat => cat.id === id);
+    if (!subcategoryid) return;
+    const category = categoriesArray.find(cat => cat.id === subcategoryid);
     if (category) setSubcategoryList(category.subcategories);
-  }, [id]);
+  }, [subcategoryid]);
 
   const handleSubcategoryPress = (subcategory: Subcategory) => {
     router.push({
       pathname: '/productsCategories/[subcategoryProducsId]',
       params: {
-        subcategoryId: subcategory.id,
+          subcategoryProducsId: subcategory.id,
         subcategoryName: subcategory.name,
-        categoryId: id,
+        categoryId: subcategoryid,
         categoryName: categoryName
       }
     });

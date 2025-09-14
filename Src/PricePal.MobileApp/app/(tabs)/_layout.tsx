@@ -191,31 +191,14 @@ const _layout = () => {
             />
             <Tabs.Screen
               name="search"
-              
               options={{
-                href: null,
-                   headerShown:false}}/>
-     <Tabs.Screen
-  name="subcategories/[id]"
-  options={{
-    href: null,  
-    headerShown: false
-  }}
-/>
-     <Tabs.Screen
-  name="productsCategories/[subcategoryId]"
-  options={{
-    href: null,
-    headerShown: false
-  }}
-/>
-    <Tabs.Screen
-  name="subcategories/[Id]"
-  options={{
-    href: null,  //TO DO: understand why this is happening
-    headerShown: false
-  }}
-/>
+              href: null,
+              headerShown:false}}/>
+                  <Tabs.Screen
+              name="[prouductId]"
+              options={{
+              href: null,
+              headerShown:false}}/>
 
           </Tabs>
           <SearchButton />

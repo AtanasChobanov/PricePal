@@ -1,24 +1,44 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Dimensions, Image, ImageBackground, ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
-
-
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+  
+export const ourChoiceProducts: Product[] = [
+  { id: "ourChoice-1", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "ourChoice-2", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "ourChoice-3", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+];
+export const topProducts: Product[] = [
+  { id: "top-1", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "top-2", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "top-3", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+];
+
+export const mostSoldProducts: Product[] = [
+  { id: "mostSold-1", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "mostSold-2", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+  { id: "mostSold-3", name: "Хляб", brand: "Ресенски", price: "5.99", photo: require("../../assets/images/hlqb.jpg") },
+];
 
 
 interface Product {
+    id: string; 
   name: string;
   brand: string;
   price: string;
-  photo?: string | null;
+  photo?:  ImageSourcePropType;
 }
 
 interface ProductBoxProps {
+  id:string;
   productName: string;
   brand: string;
   price: string;
-  photo?: string | null;
-  colors?: string[];
+  photo?: ImageSourcePropType;
+  colors?:[string, string, ...string[]];
 }
 
 interface HeartIconProps {
@@ -32,7 +52,7 @@ interface CategoryButtonProps {
 interface ProductSectionProps {
   title: string;
   products: Product[];
-  gradientColors?: string[];
+  gradientColors: [string, string, ...string[]];
 }
 
 //  Width and height functions
@@ -52,6 +72,7 @@ const getFontSize = (size: number): number => {
 };
 
 const ProductBox: React.FC<ProductBoxProps> = ({ 
+  id,
   productName, 
   brand, 
   price, 
@@ -61,66 +82,78 @@ const ProductBox: React.FC<ProductBoxProps> = ({
 
   const cardWidth = wp(45);
   const imageSize = cardWidth;
+  const router = useRouter();
+
+  const handleProductPress = (productId: string) => {
+    router.push({
+      pathname: '/products/[productID]',
+      params: { 
+        productID: productId,
+      }
+    });
+  };
 
   return (
-    <View style={{ width: cardWidth }}>
-      <View style={styles.imageContainer}>
-        {photo ? (
-          <Image
-            source={{ uri: photo }}
-            style={[styles.productImage, { width: imageSize, height: imageSize }]}
-            resizeMode="cover"
-          />
-        ) : (
-          <Image
-            source={require("../../assets/images/hlqb.jpg")}
-            style={[styles.productImage, { width: imageSize, height: imageSize }]}
-            resizeMode="cover"
-          />
-        )}
-        {/* Heart icon overlay */}
-        <View style={styles.heartOverlay}>
-          <HeartIcon />
+    <TouchableOpacity onPress={() => handleProductPress(id)}>
+      <View style={{ width: cardWidth }}>
+        <View style={styles.imageContainer}>
+          {photo ? (
+            <Image
+              source={photo}
+              style={[styles.productImage, { width: imageSize, height: imageSize }]}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              source={require("../../assets/images/hlqb.jpg")}
+              style={[styles.productImage, { width: imageSize, height: imageSize }]}
+              resizeMode="cover"
+            />
+          )}
+          <View style={styles.heartOverlay}>
+            <HeartIcon />
+          </View>
         </View>
+        <LinearGradient
+          style={[styles.products, { width: cardWidth }]}
+          colors={colors || ['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
+          start={{ x: 0, y: 1 }}
+        >
+          <View style={styles.productContent}>
+            <View style={styles.productNameContainer}>
+              <Text style={[styles.productName, { fontSize: getFontSize(16) }]} numberOfLines={2}>
+                {productName} {brand}
+              </Text>
+            </View>
+            <View style={styles.priceContainer}>
+              <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>От</Text>
+              <Text style={[styles.price, { fontSize: getFontSize(18) }]}>€{price}</Text>
+            </View>
+          </View>
+        </LinearGradient>
       </View>
-      <LinearGradient
-        style={[styles.products, { width: cardWidth }]}
-        colors={ ['rgba(203,230,246,1)', 'rgba(143,228,201,1)']}
-        start={{ x: 0, y: 1 }}
-      >
-        <View style={styles.productContent}>
-          <View style={styles.productNameContainer}>
-            <Text 
-              style={[styles.productName, { fontSize: getFontSize(16) }]} 
-              numberOfLines={2}
-            >
-              {productName} {brand}
-            </Text>
-          </View>
-          <View style={styles.priceContainer}>
-            <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>
-              От
-            </Text>
-            <Text style={[styles.price, { fontSize: getFontSize(18) }]}>
-              €{price}
-            </Text>
-          </View>
-        </View>
-      </LinearGradient>
-    </View>
+    </TouchableOpacity>
   );
 };
-
+   
 const HeartIcon: React.FC<HeartIconProps> = ({ filled = false }) => {
+   const [isFavorite, setIsFavorite] = useState(false);
   return (
-    <Svg height={wp(8)} width={wp(8)} viewBox="0 0 24 24">
-      <Path
-        d="M12 21s-6-4.35-9-8.28C1 9.6 3.5 5 7.5 5c2.54 0 4.5 2 4.5 2s1.96-2 4.5-2c4 0 6.5 4.6 4.5 7.72C18 16.65 12 21 12 21z"
-        fill={filled ? "black" : "none"}
-        stroke="black"
-        strokeWidth={1}
-      />
-    </Svg>
+  
+             <TouchableOpacity 
+               style={styles.favoriteButton}
+               onPress={() => setIsFavorite(!isFavorite)}
+             >
+               <Svg viewBox="0 0 24 24" width={24} height={24}>
+                 <Path
+                   d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                   fill={isFavorite ? "#FF6B6B" : "transparent"}
+                   stroke={isFavorite ? "#FF6B6B" : "#666"}
+                   strokeWidth={2}
+                 />
+               </Svg>
+             </TouchableOpacity>
+   
   );
 };
 
@@ -161,16 +194,17 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         contentContainerStyle={{ paddingHorizontal: wp(4) }}
       >
         <View style={styles.productsRow}>
-          {products.map((product, index) => (
-            <ProductBox
-              key={index}
-              productName={product.name}
-              brand={product.brand}
-              price={product.price}
-              photo={product.photo}
-              colors={gradientColors}
-            />
-          ))}
+          {products.map((product) => (
+  <ProductBox
+    key={product.id}
+    id={product.id}      
+    productName={product.name}
+    brand={product.brand}
+    price={product.price}
+    photo={product.photo}
+    colors={gradientColors}
+  />
+))}
         </View>
       </ScrollView>
     </>
@@ -180,24 +214,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 const Index: React.FC = () => {
 
   const categories: string[] = ["Месо", "Зеленчуци", "Плодове", "Хляб", "Млечни"];
-  
-  const ourChoiceProducts: Product[] = [
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-  ];
 
-  const topProducts: Product[] = [
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-  ];
-
-  const mostSoldProducts: Product[] = [
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-    { name: "Хляб", brand: "Ресенски", price: "5.99", photo: null },
-  ];
 
   return (
     <ImageBackground
@@ -365,6 +382,22 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: 'bold',
     color: 'black',
+  },
+   favoriteButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: 'white',
+    padding: 6,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

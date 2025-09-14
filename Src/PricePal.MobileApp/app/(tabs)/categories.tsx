@@ -49,7 +49,7 @@ export const productsArray: Product[] = [
 export const categoriesArray: CategoriesProps[] = [
   { 
     id: "fruits-vegetables", 
-    text: "🍎 Плодове и зеленчуци", 
+    text: "🍎Плодове и зеленчуци", 
     link: "fruits-vegetables",
     subcategories: [
       { id: "fruits", name: "Плодове" },
@@ -59,7 +59,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "meat-poultry", 
-    text: "🥩 Месо и птици", 
+    text: "🥩Месо и птици", 
     link: "meat-poultry",
     subcategories: [
       { id: "fresh-meat", name: "Прясно месо (свинско, телешко, пилешко, агнешко)" },
@@ -69,7 +69,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "fish-seafood", 
-    text: "🐟 Риба и морски дарове", 
+    text: "🐟Риба и морски дарове", 
     link: "fish-seafood",
     subcategories: [
       { id: "fresh-fish", name: "Прясна риба" },
@@ -78,7 +78,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "dairy", 
-    text: "🧀 Млечни продукти", 
+    text: "🧀Млечни продукти", 
     link: "dairy",
     subcategories: [
       { id: "milk", name: "Мляко" },
@@ -90,7 +90,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "bakery", 
-    text: "🍞 Хлебни изделия", 
+    text: "🍞Хлебни изделия", 
     link: "bakery",
     subcategories: [
       { id: "bread", name: "Хляб" },
@@ -101,7 +101,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "frozen-foods", 
-    text: "❄️ Замразени храни", 
+    text: "❄️Замразени храни", 
     link: "frozen-foods",
     subcategories: [
       { id: "frozen-vegetables", name: "Замразени зеленчуци" },
@@ -112,7 +112,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "canned-foods", 
-    text: "🥫 Консерви и пакетирани храни", 
+    text: "🥫Консерви и пакетирани храни", 
     link: "canned-foods",
     subcategories: [
       { id: "canned-vegetables", name: "Консервирани зеленчуци" },
@@ -124,7 +124,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "staples-spices", 
-    text: "🥖 Основни продукти и подправки", 
+    text: "🥖Основни продукти и подправки", 
     link: "staples-spices",
     subcategories: [
       { id: "rice", name: "Ориз" },
@@ -137,7 +137,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "snacks", 
-    text: "🍿 Снаксове", 
+    text: "🍿Снаксове", 
     link: "snacks",
     subcategories: [
       { id: "chips-crackers", name: "Чипсове и крекери" },
@@ -147,7 +147,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "sweets-desserts", 
-    text: "🍫 Сладки и десерти", 
+    text: "🍫Сладки и десерти", 
     link: "sweets-desserts",
     subcategories: [
       { id: "chocolate", name: "Шоколад" },
@@ -157,7 +157,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "breakfast-cereals", 
-    text: "🥣 Закуска и зърнени продукти", 
+    text: "🥣Закуска и зърнени продукти", 
     link: "breakfast-cereals",
     subcategories: [
       { id: "oats", name: "Овесени ядки" },
@@ -167,7 +167,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "drinks", 
-    text: "🥤 Напитки", 
+    text: "🥤Напитки", 
     link: "drinks",
     subcategories: [
       { id: "water", name: "Вода" },
@@ -180,7 +180,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "alcohol", 
-    text: "🍷 Алкохол", 
+    text: "🍷Алкохол", 
     link: "alcohol",
     subcategories: [
       { id: "beer", name: "Бира" },
@@ -190,7 +190,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "cleaning-laundry", 
-    text: "🧼 Почистващи и перилни препарати", 
+    text: "🧼Почистващи и перилни препарати", 
     link: "cleaning-laundry",
     subcategories: [
       { id: "laundry-detergents", name: "Препарати за пране" },
@@ -202,7 +202,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "paper-products", 
-    text: "🧻 Хартиени продукти", 
+    text: "🧻Хартиени продукти", 
     link: "paper-products",
     subcategories: [
       { id: "toilet-paper", name: "Тоалетна хартия" },
@@ -212,7 +212,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "disposables", 
-    text: "🥡 Еднократни съдове и опаковки", 
+    text: "🥡Еднократни съдове и опаковки", 
     link: "disposables",
     subcategories: [
       { id: "bags", name: "Торбички" },
@@ -222,7 +222,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "organization-storage", 
-    text: "📦 Организация и съхранение", 
+    text: "📦Организация и съхранение", 
     link: "organization-storage",
     subcategories: [
       { id: "containers-boxes", name: "Контейнери и кутии" },
@@ -231,7 +231,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "pet-care", 
-    text: "🐾 Грижа за домашни любимци", 
+    text: "🐾Грижа за домашни любимци", 
     link: "pet-care",
     subcategories: [
       { id: "pet-food", name: "Храна за кучета и котки" },
@@ -240,7 +240,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "toiletries", 
-    text: "🧴 Тоалетни принадлежности", 
+    text: "🧴Тоалетни принадлежности", 
     link: "toiletries",
     subcategories: [
       { id: "shampoos-conditioners", name: "Шампоани и балсами" },
@@ -251,7 +251,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "skin-care", 
-    text: "💆‍♀️ Грижа за кожата", 
+    text: "💆‍♀️Грижа за кожата", 
     link: "skin-care",
     subcategories: [
       { id: "creams-lotions", name: "Кремове и лосиони" },
@@ -261,7 +261,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "hair-care", 
-    text: "💇‍♀️ Грижа за косата", 
+    text: "💇‍♀️Грижа за косата", 
     link: "hair-care",
     subcategories: [
       { id: "hair-dye", name: "Бои за коса" },
@@ -270,7 +270,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "health-wellness", 
-    text: "💊 Здраве и уелнес", 
+    text: "💊Здраве и уелнес", 
     link: "health-wellness",
     subcategories: [
       { id: "vitamins-supplements", name: "Витамини и добавки" },
@@ -280,7 +280,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "baby-products", 
-    text: "👶 Бебешки продукти", 
+    text: "👶Бебешки продукти", 
     link: "baby-products",
     subcategories: [
       { id: "diapers", name: "Пелени" },
@@ -290,7 +290,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "kitchen-serving", 
-    text: "🍳 Кухня и сервиране", 
+    text: "🍳Кухня и сервиране", 
     link: "kitchen-serving",
     subcategories: [
       { id: "pots-pans", name: "Тенджери, тигани" },
@@ -300,7 +300,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "small-appliances", 
-    text: "🔌 Електроуреди", 
+    text: "🔌Електроуреди", 
     link: "small-appliances",
     subcategories: [
       { id: "small-appliances", name: "Малки уреди (чайници, тостери, блендери)" }
@@ -308,7 +308,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "electronics-accessories", 
-    text: "🔋 Електроника и аксесоари", 
+    text: "🔋Електроника и аксесоари", 
     link: "electronics-accessories",
     subcategories: [
       { id: "chargers", name: "Зарядни" },
@@ -317,7 +317,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "textiles-clothing", 
-    text: "🧦 Текстил и облекло", 
+    text: "🧦Текстил и облекло", 
     link: "textiles-clothing",
     subcategories: [
       { id: "socks", name: "Чорапи" },
@@ -327,7 +327,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "office-stationery", 
-    text: "🖊️ Офис и канцеларски материали", 
+    text: "🖊️Офис и канцеларски материали", 
     link: "office-stationery",
     subcategories: [
       { id: "notebooks", name: "Тетрадки" },
@@ -336,7 +336,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "car-products", 
-    text: "🚗 Автомобилни продукти", 
+    text: "🚗Автомобилни продукти", 
     link: "car-products",
     subcategories: [
       { id: "car-cleaning", name: "Почистващи препарати за автомобили" },
@@ -345,7 +345,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "seasonal-garden", 
-    text: "🌱 Сезонни и градински продукти", 
+    text: "🌱Сезонни и градински продукти", 
     link: "seasonal-garden",
     subcategories: [
       { id: "plants", name: "Растения" },
@@ -354,7 +354,7 @@ export const categoriesArray: CategoriesProps[] = [
   },
   { 
     id: "sports-leisure", 
-    text: "🏋️‍♂️ Спорт и свободно време", 
+    text: "🏋️‍♂️Спорт и свободно време", 
     link: "sports-leisure",
     subcategories: [
       { id: "fitness-accessories", name: "Фитнес аксесоари" },
@@ -442,7 +442,7 @@ const CategoryBox: React.FC = () => {
     router.push({
       pathname: '/subcategories/[subcategoryid]',
       params: { 
-        id: category.id,
+          subcategoryid: category.id,
         categoryName: category.text,
            subcategories: JSON.stringify(category.subcategories)
       }
@@ -451,8 +451,8 @@ const CategoryBox: React.FC = () => {
   return (
             <View>
       <View className="flex-row flex-wrap">
-        {categoriesArray.map((category, index) => (
-          <View key={index} className="m-2">
+        {categoriesArray.map((category) => (
+         <View key={category.id} className="m-2">
             <TouchableOpacity 
               onPress={() => handleCategoryPress(category)} 
               style={styles.button}

@@ -1,10 +1,9 @@
-import { Router } from "express";
-import prisma from "../config/prismaClient.js";
+import { Router, type Request, type Response } from "express";
 
 const router = Router();
 
 // GET /products
-router.get("/", async (req, res) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const products = [
       {

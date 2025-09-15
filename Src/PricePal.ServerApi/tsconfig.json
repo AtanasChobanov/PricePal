@@ -11,6 +11,7 @@
     "target": "es2020",
     "moduleResolution": "nodenext",
     "esModuleInterop": true,
+    "types": ["@types/node", "@types/express", "@types/cors"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],

@@ -194,11 +194,7 @@ const _layout = () => {
               options={{
               href: null,
               headerShown:false}}/>
-                  <Tabs.Screen
-              name="[prouductId]"
-              options={{
-              href: null,
-              headerShown:false}}/>
+           
 
           </Tabs>
           <SearchButton />

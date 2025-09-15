@@ -85,12 +85,7 @@ const ProductBox: React.FC<ProductBoxProps> = ({
   const router = useRouter();
 
   const handleProductPress = (productId: string) => {
-    router.push({
-      pathname: '/products/[productID]',
-      params: { 
-        productID: productId,
-      }
-    });
+   router.push(`/products/${productId}`);
   };
 
   return (

@@ -85,7 +85,7 @@ const ProductBox: React.FC<ProductBoxProps> = ({
   const router = useRouter();
 
   const handleProductPress = (productId: string) => {
-   router.push(`/products/${productId}`);
+   router.navigate(`/products/${productId}`);
   };
 
   return (

@@ -29,9 +29,7 @@ const CategoryPage: React.FC = () => {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="p-4">
-        <Text className="text-2xl font-bold mb-4">{categoryName}</Text>
-
+      <View className="p-4 mt-10">
         <View className="flex-row flex-wrap">
           {subcategoryList.map(subcategory => (
             <View key={subcategory.id} className="w-1/2 p-2">

@@ -4,7 +4,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Product, productsArray } from '../(tabs)/categories';
 
 const ProductsPage: React.FC = () => {
-  const { subcategoryProducsId, subcategoryName } = useLocalSearchParams();
+  const { subcategoryProducsId } = useLocalSearchParams();
   const [productsList, setProductsList] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -16,9 +16,8 @@ const ProductsPage: React.FC = () => {
 
   return (
     <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-4">{subcategoryName}</Text>
 
-      <View className="flex-col">
+      <View className="flex-col mt-10">
         {productsList.map(product => (
           <View key={product.id} className="mb-3 p-3 border rounded-lg">
             <Text className="text-lg font-semibold">{product.name}</Text>

@@ -1,15 +1,15 @@
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
-import { mostSoldProducts, ourChoiceProducts, topProducts } from '../../app/(tabs)/index';
-
+import { Product, productsArray } from '../(tabs)/categories';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-
+const wp = (percentage: number) => (percentage * screenWidth) / 100;
 const hp = (percentage: number) => (percentage * screenHeight) / 100;
 const getFontSize = (size: number) => {
   if (screenWidth < 350) return size * 0.85;
@@ -17,14 +17,17 @@ const getFontSize = (size: number) => {
   return size;
 };
 
-export default function ProductLayout() {
+export default function SubcategoryProductLayout() {
   const router = useRouter();
-  const { productID } = useLocalSearchParams<{ productID: string }>();
-
-    const allProducts = [...ourChoiceProducts, ...topProducts, ...mostSoldProducts];
-    const product = allProducts.find(p => p.id === productID);
-
-    if (!product) return <Text>Product not found</Text>;
+    const { subcategoryProducsId, subcategoryName } = useLocalSearchParams();
+    const [productsList, setProductsList] = useState<Product[]>([]);
+  
+    useEffect(() => {
+      if (!subcategoryProducsId) return;
+      // Filter products by subcategoryProducsId
+      const filtered = productsArray.filter(p => p.subcategoryId === subcategoryProducsId);
+      setProductsList(filtered);
+    }, [subcategoryProducsId]);
 
   return (
     <SafeAreaProvider>
@@ -61,7 +64,7 @@ export default function ProductLayout() {
           </TouchableOpacity>
 
           {/* Title */}
-          <Text style={styles.title}>{product.name} {product.brand}</Text>
+          <Text style={styles.title}>{subcategoryName}</Text>
         </View>
 
         {/* Your stack screens */}
@@ -71,7 +74,7 @@ export default function ProductLayout() {
             animation: 'slide_from_right',
           }}
         >
-          <Stack.Screen name="[productID]" />
+          <Stack.Screen name="[subcategoryProducsId]" />
         </Stack>
       </SafeAreaView>
     </SafeAreaProvider>

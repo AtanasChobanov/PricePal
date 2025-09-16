@@ -291,6 +291,9 @@ const styles = StyleSheet.create({
   },
   tabBarBlur: {
     ...StyleSheet.absoluteFillObject,
+      borderColor:'#E5E4E2',
+    borderStyle:'solid',
+    borderWidth:1,
   },
 });
 

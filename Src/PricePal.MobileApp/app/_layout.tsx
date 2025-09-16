@@ -11,5 +11,12 @@ export default function RootLayout() {
          <Stack.Screen
     name="products"
     options={{headerShown:false}}/>
+             <Stack.Screen
+    name="subcategories"
+    options={{headerShown:false}}/>
+             <Stack.Screen
+    name="productsCategories"
+    options={{headerShown:false}}/>
   </Stack>;
+  
 }

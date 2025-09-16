@@ -60,7 +60,7 @@ const productPriceHistory = [
     return (
          <Animated.View
       style={{ flex: 1 }}
-      entering={SlideInRight.duration(500)} // 👈 smooth slide from right
+      entering={SlideInRight.duration(400)} // 👈 smooth slide from right
       exiting={SlideOutLeft.duration(300)}    
     >
    <ImageBackground
@@ -302,6 +302,7 @@ const productPriceHistory = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
   },
   backgroundImage: {
     flex: 1,
@@ -313,6 +314,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: 'white',
+        marginTop:wp(15),
     alignItems: 'center',
     paddingVertical: 0,
     marginBottom: hp(1.5),

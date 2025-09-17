@@ -25,7 +25,7 @@ const getFontSize = (size: number): number => {
   return size; 
 };
 
-const TabBarHeight = Math.max(hp(8.5), 65); 
+  const TabBarHeight = Math.max(hp(8.5), 65); 
 
 const getCircleSize = (percentage: number): number => {
   const width = wp(percentage);
@@ -115,6 +115,7 @@ const _layout = () => {
               tabBarShowLabel: false,
               tabBarItemStyle: {
                 flex: 1,
+        
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: 15,
@@ -123,6 +124,8 @@ const _layout = () => {
                 position: 'absolute',
                 bottom: hp(4.5),
                 left: '50%',
+              paddingLeft:wp(4),
+              paddingRight:wp(4),
                 transform: [{ translateX: 25 }], 
                 height: TabBarHeight,
                 width: wp(70),
@@ -184,7 +187,7 @@ const _layout = () => {
                   <TabIcon
                     focused={focused}
                     icon={require('../../assets/icons/categories.png')}
-                    title={'Категорий'}
+                    title={'Секции'}
                   />
                 ),
               }}
@@ -237,18 +240,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     marginTop: hp(3.9), 
     marginRight: wp(0.5),
-    height: TabBarHeight,
+    height: hp(7),
      borderColor:"white",
      borderWidth:0.5,
-    width: wp(30),
+    width: wp(25),
   },
   focusedText: {
     marginLeft: 6,
     fontSize: getFontSize(13),
     color: '#000000',
     fontWeight: '500',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   defaultTab: {
     justifyContent: 'center',

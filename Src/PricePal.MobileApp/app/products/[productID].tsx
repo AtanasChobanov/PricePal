@@ -2,7 +2,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated";
+import Animated, { SlideOutLeft, ZoomIn } from "react-native-reanimated";
 import { enableScreens } from 'react-native-screens';
 import Svg, { Path } from "react-native-svg";
 
@@ -60,7 +60,7 @@ const productPriceHistory = [
     return (
          <Animated.View
       style={{ flex: 1 }}
-      entering={SlideInRight.duration(400)} // 👈 smooth slide from right
+      entering={ZoomIn.duration(400)}
       exiting={SlideOutLeft.duration(300)}    
     >
    <ImageBackground
@@ -261,14 +261,18 @@ const productPriceHistory = [
     <Text style={styles.trendText}>+15% спрямо миналия месец</Text>
   </View>
 </View>
-     
+     <View style={styles.chartContainer}>
+      <Image/>
+      <Text>Kaufland</Text>
+
+     </View>
       
         </ScrollView>
 
 
 
 
-            {/* Action Button */}
+            {/* Cart Button */}
           <BlurView
           intensity={20}
           tint="light"

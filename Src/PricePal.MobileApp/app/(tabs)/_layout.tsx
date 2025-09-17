@@ -47,6 +47,7 @@ const TabIcon = ({ focused, icon, title }: any) => {
         <Text style={[styles.focusedText, { zIndex: 1 }]}>{title}</Text>
       </View>
     );
+    
   }
   return (
     <View style={styles.defaultTab}>

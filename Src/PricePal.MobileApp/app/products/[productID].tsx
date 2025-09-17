@@ -2,7 +2,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Animated, { SlideOutLeft, ZoomIn } from "react-native-reanimated";
+import Animated, { SlideInRight, SlideOutRight } from "react-native-reanimated";
 import { enableScreens } from 'react-native-screens';
 import Svg, { Path } from "react-native-svg";
 
@@ -60,8 +60,8 @@ const productPriceHistory = [
     return (
          <Animated.View
       style={{ flex: 1 }}
-      entering={ZoomIn.duration(400)}
-      exiting={SlideOutLeft.duration(300)}    
+      entering={SlideInRight.duration(400)}
+      exiting={SlideOutRight.duration(300)}    
     >
    <ImageBackground
         source={require("../../assets/images/background2.png")}

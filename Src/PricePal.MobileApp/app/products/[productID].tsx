@@ -164,7 +164,7 @@ const productPriceHistory = [
     thickness={4}
     color="#8FE4C9"
     color1="#8FE4C9"
-    
+
     // Chart dimensions and spacing
     width={wp(85)}
     height={200}
@@ -261,17 +261,28 @@ const productPriceHistory = [
     <Text style={styles.trendText}>+15% спрямо миналия месец</Text>
   </View>
 </View>
-     <View style={styles.chartContainer}>
-      <Image/>
-      <Text>Kaufland</Text>
-
+    <View>
      </View>
+     <View style={styles.retailsContainer}>
+  {/* Left side - Logo, Name, Discount */}
+  <View style={styles.leftSection}>
+    <View style={styles.storeInfo}>
+      <Image style={styles.retailImages} source={require("../../assets/icons/kaufland-logo.png")}/>
+      <Text style={styles.retailText}>Kaufland</Text>
+    </View>
+    <View style={styles.discountContainer}>
+      <Text style={styles.discountText}>-50%</Text>
+    </View>
+  </View>
+
+  {/* Right side - Prices */}
+  <View style={styles.rightSection}>
+    <Text style={styles.retailPrice}>€{product.price}</Text>
+    <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
+  </View>
+</View>
       
         </ScrollView>
-
-
-
-
             {/* Cart Button */}
           <BlurView
           intensity={20}
@@ -328,7 +339,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     shadowColor: '#000',
     overflow: 'hidden',  
-    borderRadius:15,
+    borderRadius:wp(4),
     shadowOffset: {
       width: 0,
       height: 2,
@@ -361,10 +372,19 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    marginHorizontal: 16,
-    borderRadius: 12,
+    width:wp(95),
+    alignSelf:'center',
+    borderRadius:wp(4),
     padding: 20,
     marginBottom: 20,
+        shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   productName: {
     fontSize: 28,
@@ -449,8 +469,9 @@ const styles = StyleSheet.create({
   },
   chartContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    marginHorizontal: 16,
-    borderRadius: 16,
+    borderRadius:wp(4),
+      width:wp(95),
+      alignSelf:'center',
     padding: 20,
     marginBottom: 20,
     shadowColor: '#000',
@@ -518,5 +539,60 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+ retailsContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: wp(4),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: wp(95),
+    alignSelf: 'center',
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  leftSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  storeInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  rightSection: {
+    alignItems: 'flex-end',
+  },
+  retailImages: {
+    width: wp(10),
+    height: wp(10),
+  },
+  retailText: {
+    paddingLeft: wp(2),
+    fontWeight: 'bold',
+    fontSize: getFontSize(16),
+    color: '#333',
+  },
+  discountText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  retailPrice: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#8bdcc3',
+    marginBottom: 2,
+  },
+
+
 });
 

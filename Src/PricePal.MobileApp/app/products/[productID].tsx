@@ -113,13 +113,9 @@ const productPriceHistory = [
               </View>
               <Text style={styles.ratingText}>4.8 (124 reviews)</Text>
             </View>
-              <View style={styles.discountContainer}>
-                <Text style={{color:'black', fontWeight:'semibold'}}>-50%</Text>
-                </View>
             {/* Price */}
             <View style={styles.priceContainer}>
               <Text style={styles.price}>€{product.price}</Text>
-              <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
             </View>
 
 
@@ -147,7 +143,82 @@ const productPriceHistory = [
           </View>
 
 
-      
+ 
+
+
+      {/* Retail Box */}
+     <View style={styles.retailsContainer}>
+  <Text style={styles.retailTitle}>Цени в различните вериги</Text>
+
+      {/* Kaufland */}
+      <View style={styles.OneRetailBox}>
+  <View style={styles.leftSection}>
+    <View style={styles.storeInfo}>
+      <Image style={styles.retailImages} source={require("../../assets/icons/kaufland-logo.png")}/>
+      <Text style={styles.retailText}>Kaufland</Text>
+    </View>
+    <View style={styles.discountContainer}>
+      <Text style={styles.discountText}>-50%</Text>
+    </View>
+  </View>
+  <View style={styles.rightSection}>
+    <Text style={styles.retailPrice}>€{product.price}</Text>
+            <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
+  </View>
+    </View>
+    {/* Lidl */}
+     <View style={styles.OneRetailBox}>
+  <View style={styles.leftSection}>
+    <View style={styles.storeInfo}>
+      <Image style={styles.retailImages} source={require("../../assets/icons/Lidl-logo.png")}/>
+      <Text style={styles.retailText}>Lidl</Text>
+    </View>
+    <View style={styles.discountContainer}>
+      <Text style={styles.discountText}>-50%</Text>
+    </View>
+  </View>
+  <View style={styles.rightSection}>
+    <Text style={styles.retailPrice}>€{product.price}</Text>
+            <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
+  </View>
+    </View>
+
+
+     {/* Billa */}
+     <View style={styles.OneRetailBox}>
+  <View style={styles.leftSection}>
+    <View style={styles.storeInfo}>
+      <Image style={styles.retailImages} source={require("../../assets/icons/billa-logo.jpg")}/>
+      <Text style={styles.retailText}>Billa</Text>
+    </View>
+    <View style={styles.discountContainer}>
+      <Text style={styles.discountText}>-50%</Text>
+    </View>
+  </View>
+  <View style={styles.rightSection}>
+    <Text style={styles.retailPrice}>€{product.price}</Text>
+            <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
+  </View>
+    </View>
+
+         {/* Tmarket */}
+     <View style={styles.OneRetailBox}>
+  <View style={styles.leftSection}>
+    <View style={styles.storeInfo}>
+      <Image style={styles.retailImages} source={require("../../assets/icons/tmarket-logo.png")}/>
+      <Text style={styles.retailText}>T Market</Text>
+    </View>
+    <View style={styles.discountContainer}>
+      <Text style={styles.discountText}>-50%</Text>
+    </View>
+  </View>
+  <View style={styles.rightSection}>
+    <Text style={styles.retailPrice}>€{product.price}</Text>
+            <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
+  </View>
+    </View>
+</View>
+           {/* Charts */}
 <View style={styles.chartContainer}>
   <Text style={styles.chartTitle}>Ценова история</Text>
   <Text style={styles.chartSubtitle}>Последни 6 месеца</Text>
@@ -261,27 +332,6 @@ const productPriceHistory = [
     <Text style={styles.trendText}>+15% спрямо миналия месец</Text>
   </View>
 </View>
-    <View>
-     </View>
-     <View style={styles.retailsContainer}>
-  {/* Left side - Logo, Name, Discount */}
-  <View style={styles.leftSection}>
-    <View style={styles.storeInfo}>
-      <Image style={styles.retailImages} source={require("../../assets/icons/kaufland-logo.png")}/>
-      <Text style={styles.retailText}>Kaufland</Text>
-    </View>
-    <View style={styles.discountContainer}>
-      <Text style={styles.discountText}>-50%</Text>
-    </View>
-  </View>
-
-  {/* Right side - Prices */}
-  <View style={styles.rightSection}>
-    <Text style={styles.retailPrice}>€{product.price}</Text>
-    <Text style={styles.originalPrice}>€{(parseFloat(product.price) * 1.2).toFixed(2)}</Text>
-  </View>
-</View>
-      
         </ScrollView>
             {/* Cart Button */}
           <BlurView
@@ -332,7 +382,7 @@ const styles = StyleSheet.create({
         marginTop:wp(15),
     alignItems: 'center',
     paddingVertical: 0,
-    marginBottom: hp(1.5),
+    marginBottom: hp(2),
     alignSelf: 'center', 
     height:hp(40),
     width:wp(94),
@@ -376,7 +426,7 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     borderRadius:wp(4),
     padding: 20,
-    marginBottom: 20,
+    marginBottom: hp(2),
         shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -400,7 +450,7 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: hp(1),
   },
   starsContainer: {
     flexDirection: 'row',
@@ -413,27 +463,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
-  discountContainer:{
-    backgroundColor: '#rgba(203,230,246,1)',
-    padding:5,
-    borderRadius:5,
-    alignSelf: 'flex-start',
-  },
+
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 25,
+    marginBottom: hp(2),
   },
   price: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#8bdcc3',
+    color: '#96D4F7',
     marginRight: 10,
-  },
-  originalPrice: {
-    fontSize: 20,
-    color: '#999',
-    textDecorationLine: 'line-through',
   },
   sectionTitle: {
     fontSize: 20,
@@ -473,7 +513,7 @@ const styles = StyleSheet.create({
       width:wp(95),
       alignSelf:'center',
     padding: 20,
-    marginBottom: 20,
+    marginBottom: hp(2),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -542,7 +582,7 @@ const styles = StyleSheet.create({
  retailsContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: wp(4),
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: wp(95),
@@ -570,6 +610,7 @@ const styles = StyleSheet.create({
   },
   rightSection: {
     alignItems: 'flex-end',
+    
   },
   retailImages: {
     width: wp(10),
@@ -579,7 +620,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp(2),
     fontWeight: 'bold',
     fontSize: getFontSize(16),
-    color: '#333',
+    color: '#000000',
   },
   discountText: {
     color: 'black',
@@ -587,12 +628,36 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   retailPrice: {
-    fontSize: 20,
+    fontSize: getFontSize(20),
     fontWeight: 'bold',
-    color: '#8bdcc3',
+    color: '#96D4F7',
     marginBottom: 2,
   },
-
+    discountContainer:{
+    backgroundColor: 'rgba(143,228,201,1)',
+    padding:5,
+    borderRadius:5,
+    alignSelf: 'center',
+  },
+    originalPrice: {
+    fontSize: getFontSize(18),
+    color: '#999',
+    textDecorationLine: 'line-through',
+  },
+OneRetailBox:{
+  paddingVertical:hp(0.5),
+  flexDirection:'row',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
+    
+},
+retailTitle:{
+   fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+    alignSelf:'flex-start'
+}
 
 });
 

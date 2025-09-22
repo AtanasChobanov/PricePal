@@ -114,6 +114,18 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
             <Tabs
               screenOptions={{
                 tabBarShowLabel: false,
+                  animation: 'shift',
+                   transitionSpec: {
+                    animation: 'spring',
+                      config: {
+                                stiffness: 600,
+                                damping: 120,
+                                mass: 1.2,
+                                overshootClamping: true,
+                                restDisplacementThreshold: 0.01,
+                                restSpeedThreshold: 0.01,
+                                  }
+    },
                 tabBarItemStyle: {
                   flex: 1,
           

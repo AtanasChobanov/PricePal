@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 //  Width and height functions
@@ -24,11 +24,12 @@ export interface Subcategory {
   id: string;
   name: string;
 }
+
 export interface CategoriesProps {
   text: string;
   link: string;
   id: string;
-  subcategories:Subcategory[];
+  subcategories: Subcategory[];
 }
 
 export interface Product {
@@ -363,12 +364,11 @@ export const categoriesArray: CategoriesProps[] = [
   },
 ];
 
-
 // Function to determine category type decides on colors
 const getCategoryColors = (categoryText: string): string[] => {
   
   // Food & Beverages
- const foodCategories = [
+  const foodCategories = [
     "🍎Плодове и зеленчуци",
     "🥩Месо и птици",
     "🐟Риба и морски дарове",
@@ -432,90 +432,119 @@ const getCategoryColors = (categoryText: string): string[] => {
   }
 };
 
+// Fixed 2 columns
+const numColumns = 2;
 
-
-const CategoryBox: React.FC = () => {
+const Categories = () => {
   const router = useRouter();
 
-
- const handleCategoryPress = (category: CategoriesProps) => {
+  const handleCategoryPress = (category: CategoriesProps) => {
     router.push({
       pathname: '/subcategories/[subcategoryid]',
       params: { 
-          subcategoryid: category.id,
+        subcategoryid: category.id,
         categoryName: category.text,
-           subcategories: JSON.stringify(category.subcategories)
+        subcategories: JSON.stringify(category.subcategories)
       }
     });
   };
-  return (
-            <View>
-      <View className="flex-row flex-wrap">
-        {categoriesArray.map((category) => (
-         <View key={category.id} className="m-2">
-            <TouchableOpacity 
-              onPress={() => handleCategoryPress(category)} 
-              style={styles.button}
-            >
-              <LinearGradient
-                className="p-5 rounded-xl items-center justify-center"
-                colors={getCategoryColors(category.text) as [string, string]}
-                start={{ x: 0, y: 1 }}
-                style={styles.categories}
-              >
-                <Text className="text-l font-semibold">{category.text}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+
+  const renderCategoryItem = ({ item }: { item: CategoriesProps }) => (
+    <View style={styles.itemContainer}>
+      <TouchableOpacity 
+        onPress={() => handleCategoryPress(item)} 
+        style={styles.button}
+      >
+        <LinearGradient
+          colors={getCategoryColors(item.text) as [string, string]}
+          start={{ x: 0, y: 1 }}
+          style={styles.categories}
+        >
+          <Text style={styles.categoryText}>{item.text}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
     </View>
-
   );
-};
 
+  const getItemLayout = (data: any, index: number) => ({
+    length: hp(10) + 16, // item height + margins
+    offset: (hp(10) + 16) * Math.floor(index / numColumns),
+    index,
+  });
 
-
-
-const Categories = () => {
   return (
     <ImageBackground
       source={require("../../assets/images/background2.png")}
-      style={styles.backgroundImage}>
-      <ScrollView
-        className=" pt-[55px]"
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 2 }}>
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         {/* Title */}
-        <View className="items-center">
-          <Text className="text-4xl pt-3  pb-7 font-bold">Избери си категория</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Избери си категория</Text>
         </View>
-        {/* Categories */}
-        <View className="flex-row flex-wrap">
-        <CategoryBox/>
-           </View>
-                      <View className='mb-[170px]'></View>
-
-           
-      </ScrollView>
+        
+        {/* Categories FlatList */}
+        <FlatList
+          data={categoriesArray}
+          renderItem={renderCategoryItem}
+          keyExtractor={(item) => item.id}
+          numColumns={numColumns}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContainer}
+          columnWrapperStyle={styles.row}
+          removeClippedSubviews={true}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+        />
+      </View>
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
   },
+  container: {
+    flex: 1,
+    paddingTop: 55,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  title: {
+    fontSize: getFontSize(32),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingTop: 12,
+    paddingBottom: 2,
+  },
+  flatListContainer: {
+    paddingHorizontal: 2,
+    paddingBottom: hp(14),
+  },
+  row: {
+    flexWrap: 'wrap',
+  },
+  itemContainer: {
+    margin: 8,
+  },
   categories: {
     padding: 15,
     alignItems: 'center',
     borderRadius: 20,
   },
-    button: {
+  categoryText: {
+    fontSize: getFontSize(16),
+    fontWeight: '600',
+  },
+  button: {
     alignItems: 'center',
   },
-  
 });
 
 export default Categories;

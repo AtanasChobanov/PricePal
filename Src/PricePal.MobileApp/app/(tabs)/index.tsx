@@ -2,7 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 
 import { useState } from 'react';
-import { Dimensions, Image, ImageBackground, ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, Image, ImageBackground, ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -81,13 +81,34 @@ const ProductBox: React.FC<ProductBoxProps> = ({
   photo, 
   colors 
 }) => {
-
   const cardWidth = wp(45);
   const imageSize = cardWidth;
   const router = useRouter();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const handleProductPress = (productId: string) => {
-   router.navigate(`/products/${productId}`);
+    router.navigate(`/products/${productId}`);
+  };
+
+  const handleAddToCart = (e: any) => {
+    e.stopPropagation();
+    setIsAddingToCart(true);
+
+    // TODO: the logic behind it
+
+    // Show alert
+    Alert.alert(
+      "Добавено към количката",
+      `${productName} ${brand} беше добавен към количката`,
+      [
+        {
+          text: "Продължи",
+          onPress: () => console.log("Continue pressed"),
+        },
+      ],
+      { cancelable: true }
+    );
+    setTimeout(() => setIsAddingToCart(false), 500);
   };
 
   return (
@@ -122,9 +143,28 @@ const ProductBox: React.FC<ProductBoxProps> = ({
                 {productName} {brand}
               </Text>
             </View>
-            <View style={styles.priceContainer}>
-              <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>От</Text>
-              <Text style={[styles.price, { fontSize: getFontSize(18) }]}>€{price}</Text>
+            <View style={styles.priceCartContainer}>
+              <View style={styles.priceContainer}>
+                <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>От</Text>
+                <Text style={[styles.price, { fontSize: getFontSize(18) }]}>{price} €</Text>
+                                <Text style={[styles.price, { fontSize: getFontSize(18) }]}>{price} лв.</Text>
+
+              </View>
+              <TouchableOpacity 
+                style={[styles.addToCartButton, isAddingToCart && styles.addToCartButtonPressed]}
+                onPress={handleAddToCart}
+
+              >
+            
+                   <Svg viewBox="0 0 24 24" width={20} height={20}>
+                  <Path
+                    d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                    fill={isAddingToCart ? "#000" : "#000"}
+                  />
+                </Svg>
+
+               
+              </TouchableOpacity>
             </View>
           </View>
         </LinearGradient>
@@ -395,6 +435,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+   priceCartContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  addToCartButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: wp(2),
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  addToCartButtonPressed: {
+    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+    transform: [{ scale: 0.95 }],
   },
 });
 

@@ -10,7 +10,7 @@ const profile = () => {
            <ScrollView
              className=" "
              showsHorizontalScrollIndicator={false}
-             contentContainerStyle={{ paddingHorizontal: 2 }}>
+             contentContainerStyle={{ paddingHorizontal: 2, marginTop:70}}>
              {/* Title */}
              <View className='items-center'>
               <View>

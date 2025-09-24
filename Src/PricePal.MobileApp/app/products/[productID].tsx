@@ -115,7 +115,9 @@ const productPriceHistory = [
             </View>
             {/* Price */}
             <View style={styles.priceContainer}>
-              <Text style={styles.price}>€{product.price}</Text>
+              <Text style={styles.price}>{product.price} €</Text>
+                            <Text style={styles.price}>{product.price} лв.</Text>
+
             </View>
 
 
@@ -465,8 +467,8 @@ const styles = StyleSheet.create({
   },
 
   priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     marginBottom: hp(2),
   },
   price: {

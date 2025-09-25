@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -433,6 +434,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
+    marginTop:hp(2)
   },
   products: {
     width: DIMENSIONS.productWidth,

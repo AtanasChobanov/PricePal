@@ -5,9 +5,9 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
-import { mostSoldProducts, ourChoiceProducts, topProducts } from '../../app/(tabs)/index';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
 
 
 const hp = (percentage: number) => (percentage * screenHeight) / 100;
@@ -18,37 +18,31 @@ const getFontSize = (size: number) => {
 };
 
 export default function ProductLayout() {
+
+
   const router = useRouter();
   const { productID } = useLocalSearchParams<{ productID: string }>();
-
-    const allProducts = [...ourChoiceProducts, ...topProducts, ...mostSoldProducts];
-    const product = allProducts.find(p => p.id === productID);
-
-    if (!product) return <Text>Product not found</Text>;
-
   return (
-    <SafeAreaProvider>
+   <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-        {/* Custom Top Bar */}
         <View style={styles.topbar}>
           <LinearGradient
-             colors={['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.7)', 'transparent']}
-              locations={[0, 0.7, 1]}
+            colors={['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.7)', 'transparent']}
+            locations={[0, 0.7, 1]}
             style={StyleSheet.absoluteFill}
           />
 
-          {/* Back Button with SVG */}
+          {/* Back Button */}
           <TouchableOpacity
             onPress={() => router.back()}
             style={styles.backButton}
           >
-             <BlurView 
-                  intensity={20} 
-                  tint="light"
-                  experimentalBlurMethod="dimezisBlurView"
-                  style={StyleSheet.absoluteFillObject}
-                  
-                />
+            <BlurView
+              intensity={20}
+              tint="light"
+              experimentalBlurMethod="dimezisBlurView"
+              style={StyleSheet.absoluteFillObject}
+            />
             <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
               <Path
                 d="M15 18l-6-6 6-6"
@@ -60,14 +54,15 @@ export default function ProductLayout() {
             </Svg>
           </TouchableOpacity>
 
-          {/* Title */}
-          <Text style={styles.title}>{product.name} {product.brand}</Text>
+          {/* Dynamic Title */}
+          <Text style={styles.title}>
+            {decodeURIComponent(productID ?? "Продукт")}
+          </Text>
         </View>
 
-        {/* Your stack screens */}
         <Stack
           screenOptions={{
-            headerShown: false, // hide default header
+            headerShown: false,
             animation: 'slide_from_right',
           }}
         >

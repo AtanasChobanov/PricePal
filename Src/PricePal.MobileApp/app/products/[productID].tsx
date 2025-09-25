@@ -215,81 +215,119 @@ export default function ProductPage() {
           </View>
 
           {/* Charts */}
-          <View style={styles.chartContainer}>
-            <Text style={styles.chartTitle}>Ценова история</Text>
-            <Text style={styles.chartSubtitle}>Последни 6 месеца</Text>
-            
-            <LineChart
-              // Animation settings
-              isAnimated
-              animateOnDataChange
-              animationDuration={1500} // Reduced from 1200
-              
-              // Data and styling
-              data={productPriceHistory}
-              thickness={4}
-              color="#8FE4C9"
-              
-              // Chart dimensions and spacing
-              width={wp(85)}
-              height={200}
-              spacing={45}
-              initialSpacing={20}
-              endSpacing={20}
-              
-              // Area chart settings
-              areaChart
-              startFillColor="rgba(143, 228, 201, 0.3)"
-              endFillColor="rgba(143, 228, 201, 0.1)"
-              startOpacity={0.4}
-              endOpacity={0.05}
-              
-              // Data points
-              hideDataPoints={false}
-              dataPointsColor="#8FE4C9"
-              dataPointsRadius={6}
-              dataPointsWidth={2}
-              focusEnabled
-              showDataPointOnFocus
-              showStripOnFocus
-              showTextOnFocus
-              stripColor="rgba(143, 228, 201, 0.5)"
-              stripHeight={200}
-              stripOpacity={0.3}
-              
-              // Grid and axes
-              rulesType="dashed"
-              rulesColor="rgba(255, 255, 255, 0.3)"
-              showVerticalLines={false}
-              
-              // Y-axis settings
-              maxValue={20}
-              noOfSections={4}
-              yAxisThickness={1}
-              yAxisColor="rgba(255, 255, 255, 0.4)"
-              yAxisTextStyle={{
-                color: '#999', 
-                fontSize: 12,
-                fontWeight: '500'
-              }}
-              yAxisLabelPrefix="€"
-              formatYLabel={(value: string) => `${Math.round(Number(value))}`}
-              
-              // X-axis settings
-              xAxisThickness={1}
-              xAxisColor="rgba(255, 255, 255, 0.4)"
-              xAxisLabelTextStyle={{
-                color: '#999',
-                fontSize: 12,
-                fontWeight: '500'
-              }}
-              
-              // Background
-              backgroundColor="rgba(255, 255, 255, 0.05)"
-              curved
-              curvature={0.2}
-            />
+        <View style={styles.chartContainer}>
+  <Text style={styles.chartTitle}>Ценова история</Text>
+  <Text style={styles.chartSubtitle}>Последни 6 месеца</Text>
+  
+  <LineChart
+    // Animation settings
+    isAnimated
+    animateOnDataChange
+    animationDuration={1200}
+    onDataChangeAnimationDuration={500}
+    
+    // Data and styling
+    data={productPriceHistory}
+    thickness={4}
+    color="#8FE4C9"
+    color1="#8FE4C9"
+
+    // Chart dimensions and spacing
+    width={wp(85)}
+    height={200}
+    spacing={45}
+    initialSpacing={20}
+    endSpacing={20}
+    
+    // Area chart settings
+    areaChart
+    startFillColor="rgba(143, 228, 201, 0.3)"
+    endFillColor="rgba(143, 228, 201, 0.1)"
+    startOpacity={0.4}
+    endOpacity={0.05}
+    
+    // Data points
+    hideDataPoints={false}
+    dataPointsColor="#8FE4C9"
+    dataPointsRadius={6}
+    dataPointsWidth={2}
+    dataPointsColor1="#8FE4C9"
+    focusEnabled
+    showDataPointOnFocus
+    showStripOnFocus
+    showTextOnFocus
+    stripColor="rgba(143, 228, 201, 0.5)"
+    stripHeight={200}
+    stripOpacity={0.3}
+    
+    // Grid and axes
+    rulesType="dashed"
+    rulesColor="rgba(255, 255, 255, 0.3)"
+    showVerticalLines={false}
+    verticalLinesColor="rgba(255, 255, 255, 0.1)"
+    
+    // Y-axis settings
+    maxValue={20}
+    noOfSections={4}
+    yAxisThickness={1}
+    yAxisColor="rgba(255, 255, 255, 0.4)"
+    yAxisTextStyle={{
+      color: '#999', 
+      fontSize: 12,
+      fontWeight: '500'
+    }}
+    yAxisLabelPrefix="€"
+    formatYLabel={(value: string) => `${Math.round(Number(value))}`}
+    
+    // X-axis settings
+    xAxisThickness={1}
+    xAxisColor="rgba(255, 255, 255, 0.4)"
+    xAxisLabelTextStyle={{
+      color: '#999',
+      fontSize: 12,
+      fontWeight: '500'
+    }}
+    
+    // Background
+    backgroundColor="rgba(255, 255, 255, 0.05)"
+    curved
+    curvature={0.2}
+    
+    // Pointer config for interaction
+    pointerConfig={{
+      pointerStripHeight: 200,
+      pointerStripColor: 'rgba(203,230,246,1)',
+      pointerStripWidth: 2,
+      pointerColor: 'rgba(203,230,246,1) ',
+      radius: 8,
+      pointerLabelWidth: 100,
+      pointerLabelHeight: 90,
+      pointerLabelComponent: (items: any[]) => {
+        return (
+          <View style={styles.pointerLabel}>
+            <Text style={styles.pointerLabelText}>€{items[0].value}</Text>
+            <Text style={styles.pointerLabelMonth}>{items[0].label}</Text>
           </View>
+        );
+      },
+    }}
+  />
+  
+  {/* Price trend indicator */}
+  <View style={styles.trendIndicator}>
+    <Svg viewBox="0 0 24 24" width={16} height={16}>
+      <Path
+        d="M7 14l5-5 5 5"
+        stroke="#4CAF50"
+        strokeWidth={2}
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+    <Text style={styles.trendText}>+15% спрямо миналия месец</Text>
+  </View>
+</View>
         </ScrollView>
 
         {/* Cart Button */}

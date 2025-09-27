@@ -29,6 +29,7 @@ interface ProductBoxProps {
   productName: string;
   brand: string;
   priceBgn: string;
+  unit?:string;
   priceEur: string;
   photo?: ImageSourcePropType | string;
   colors?: [string, string, ...string[]];
@@ -64,12 +65,12 @@ const getFontSize = (size: number): number => {
   return size; 
 };
 
-// Memoized ProductBox component to prevent unnecessary re-renders
 const ProductBox: React.FC<ProductBoxProps> = React.memo(({ 
   id,
   productName, 
   brand, 
   priceBgn,
+  unit,
   priceEur,
   photo, 
   colors 
@@ -79,7 +80,7 @@ const ProductBox: React.FC<ProductBoxProps> = React.memo(({
 
   // Memoize expensive calculations
   const processedPrices = useMemo(() => ({
-    bgn: priceBgn.replace(/ЛВ.*/, ''),
+    bgn: priceBgn.replace(/\s*лв\.?.*$/i, ''),
     eur: priceEur.replace(/€.*/, '')
   }), [priceBgn, priceEur]);
 
@@ -136,6 +137,9 @@ const ProductBox: React.FC<ProductBoxProps> = React.memo(({
                 {productName}
               </Text>
             </View>
+                       {/* <View style={styles.unitContainer}>
+                            <Text>{unit}</Text>
+                        </View> */}
             <View style={styles.priceCartContainer}>
               <View style={styles.priceContainer}>
                 <Text style={[styles.priceLabel, { fontSize: getFontSize(12) }]}>От</Text>
@@ -223,6 +227,7 @@ const ProductSection: React.FC<ProductSectionProps> = React.memo(({
       brand={item.chain}
       priceBgn={item.priceBgn}
       priceEur={item.priceEur}
+      unit={item.unit}
       photo={item.imageUrl}
       colors={gradientColors}
     />
@@ -539,7 +544,6 @@ const styles = StyleSheet.create({
   },
   productNameContainer: {
     alignItems: 'center',
-    marginBottom: hp(1),
     minHeight: getFontSize(16) * 2.4,
     justifyContent:'center'
   },
@@ -630,6 +634,14 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 20,
   },
+  //     unitContainer: {
+  //   flexDirection: 'column',
+  //   backgroundColor:'#96D4F7',
+  //   paddingHorizontal:5,
+  //   borderRadius:5,
+  //   alignSelf: 'flex-start',
+  //   alignItems: 'flex-start',
+  // },
 });
 
 export default Index;

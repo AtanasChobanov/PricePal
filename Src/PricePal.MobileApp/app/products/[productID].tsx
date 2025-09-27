@@ -169,6 +169,9 @@ export default function ProductPage() {
               <Text style={styles.price}>{product.priceBgn.replace(/ЛВ.*/, '')} лв.</Text>
               <Text style={styles.price}>{product.priceEur.replace(/€.*/, '')} €</Text>
             </View>
+            <View style={styles.unitContainer}>
+                <Text>{product.unit}</Text>
+            </View>
 
             {/* Quantity Selection */}
             <View style={styles.quantitySection}>
@@ -209,7 +212,11 @@ export default function ProductPage() {
               </View>
               <View style={styles.rightSection}>
                 <Text style={styles.retailPrice}>{product.priceBgn.replace(/ЛВ.*/, '')} лв.</Text>
-                <Text style={styles.originalPrice}>{product.priceEur.replace(/€.*/, '')} €</Text>
+                <Text style={styles.originalPrice}>{product.oldPriceBgn.replace(/ЛВ.*/, '')} лв.</Text>
+              </View>
+                   <View style={styles.rightSection}>
+                <Text style={styles.retailPrice}>{product.priceEur.replace(/€.*/, '')}  €</Text>
+                <Text style={styles.originalPrice}>{product.oldPriceEur.replace(/€.*/, '')} €</Text>
               </View>
             </View>
           </View>
@@ -338,13 +345,13 @@ export default function ProductPage() {
       style={{
         position: 'absolute',
         bottom: wp(7),
-        left: 12,
-        right: 12,
+  width:wp(95),
+  alignSelf:'center',
         borderRadius: 15,
         padding: 20,
         overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.3)',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255, 255, 255, 1)',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
@@ -357,7 +364,7 @@ export default function ProductPage() {
               <Path d="M671.504,577.829l110.485-432.609H902.86v-68H729.174L703.128,179.2L0,178.697l74.753,399.129h596.751V577.829z M685.766,247.188l-67.077,262.64H131.199L81.928,246.756L685.766,247.188z" />
               <Path d="M578.418,825.641c59.961,0,108.743-48.783,108.743-108.744s-48.782-108.742-108.743-108.742H168.717 c-59.961,0-108.744,48.781-108.744,108.742s48.782,108.744,108.744,108.744c59.962,0,108.743-48.783,108.743-108.744 c0-14.4-2.821-28.152-7.927-40.742h208.069c-5.107,12.59-7.928,26.342-7.928,40.742 C469.675,776.858,518.457,825.641,578.418,825.641z M209.46,716.897c0,22.467-18.277,40.744-40.743,40.744 c-22.466,0-40.744-18.277-40.744-40.744c0-22.465,18.277-40.742,40.744-40.742C191.183,676.155,209.46,694.432,209.46,716.897z M619.162,716.897c0,22.467-18.277,40.744-40.743,40.744s-40.743-18.277-40.743-40.744c0-22.465,18.277-40.742,40.743-40.742 S619.162,694.432,619.162,716.897z" />
             </Svg>
-            <Text style={{ fontWeight: '600', fontSize: 20, marginLeft: 8 }}>Добави към количката</Text>
+            <Text style={{ fontWeight: '600', fontSize: 20, marginLeft: 8}}>Добави към количката</Text>
           </TouchableOpacity>
         </BlurView>
       </ImageBackground>
@@ -467,6 +474,11 @@ const styles = StyleSheet.create({
   },
 
   priceContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+
+  },
+    unitContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
     marginBottom: hp(2),
@@ -612,6 +624,7 @@ const styles = StyleSheet.create({
   },
   rightSection: {
     alignItems: 'flex-end',
+    paddingHorizontal:5,
     
   },
   retailImages: {
